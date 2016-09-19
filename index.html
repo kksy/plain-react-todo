@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Just Another Todo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://unpkg.com/react@15.3.1/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.1/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script type="text/babel">
+
+      var TodoInput = React.createClass({
+        handleSubmit: function(event) {
+          event.preventDefault();
+
+          var inputNode =  event.target.firstChild;
+          this.props.onUserSubmit(inputNode.value);
+          this.clearInput(inputNode);
+        },
+
+        clearInput: function(inputNode) {
+          inputNode.value = '';
+        },
+
+        render: function() {
+          var input;
+          return (
+            <form onSubmit={this.handleSubmit}>
+              <input type="text" placeholder="Add a todo" />
+            </form>
+          );
+        }
+      });
+
+      var TodoItem = React.createClass({
+        handleRemove: function(event) {
+          console.log('removed: ', event.target.innerText);
+          this.props.remove(event.target.innerText);
+        },
+
+        render: function() {
+          return <li 
+            className="collection-item" 
+            onClick={this.handleRemove}>{this.props.todoName}</li>;
+        }
+      });
+
+      var TodoList = React.createClass({
+        render: function() {
+          var todoListItems = this.props.todos.map(function(todo, index) {
+            return <TodoItem 
+              key={index}
+              className="collection-item"
+              todoName={todo}
+              remove={this.props.remove} />;
+          }, this);
+          
+          if (todoListItems.length > 0) {
+            return (
+              <ul className="collection">
+                {todoListItems}
+              </ul>
+            );
+          } else {
+            return null;
+          }
+        }
+      });
+
+      var TodoApp = React.createClass({
+        getInitialState: function() {
+          return { 
+            todos: []
+          }
+        },
+
+        addTodo: function(value) {
+          this.setState({
+            todos: this.state.todos.concat(value)
+          });
+        },
+
+        removeTodo: function(todoName) {
+          var todos = this.state.todos;
+          var indexDone = todos.indexOf(todoName);
+          this.setState({
+            todos: this.state.todos.filter(function(todo, index) {
+              return index !== indexDone;
+            })
+          });
+        },
+
+        render: function() {
+          return (
+            <div className="row">
+              <div className="input-field col s6">
+                <TodoInput onUserSubmit={this.addTodo} />
+                <TodoList
+                  todos={this.state.todos}
+                  remove={this.removeTodo} />
+              </div>
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <TodoApp />,
+        document.getElementById('container')
+      );
+
+    </script>
+  </body>
+</html>

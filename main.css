@@ -1,0 +1,7 @@
+.collection-item:hover {
+  background-color: #26A69A;
+}
+
+.marked-done {
+  text-decoration: line-through;
+}
