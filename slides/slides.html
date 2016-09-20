@@ -1,0 +1,230 @@
+<!-- TODO: make this neater -->
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Getting Started with React</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/solarized.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- External Styling -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Getting Started with React</h1>
+          <img class="react-logo" src="img/react.png" alt="react logo">
+          <p>a beginner-friendly guide</p>
+        </section>
+        <section>
+          <h2>Goals</h2>
+          <ul>
+            <li>Understanding why React is used</li>
+            <li>Introducing terminologies</li>
+            <li>Let's make a to-do list!</li>
+            <li>My approach to learning</li>
+            <li>Preview of next steps</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>What is React?</h2>
+          <ul>
+            <li>Javascript library (not a framework like Angular) for UI</li>
+            <li>Uses <a href="https://medium.com/tony-freed-consulting/what-is-virtual-dom-c0ec6d6a925c#.j55u4qohk" target="_blank">virtual DOM</a> instead of actual DOM</li>
+            <li>"...solve[s] one problem: building large applications with data that changes over time."</li>
+          </ul>
+          <a href="https://facebook.github.io/react/docs/why-react.html" class="caption" target="_blank">source: React Docs</a>
+        </section>
+
+        <section class="image">
+          <h2>Without React Style vs React Style</h2>
+          <img src="img/jquery-style-vs-react-style.png" alt="jQuery style vs React style">
+          <a href="http://reactfordesigners.com/labs/reactjs-introduction-for-people-who-know-just-enough-jquery-to-get-by/" class="caption" target="_blank">source: reactfordesigners.com</a>
+        </section>
+
+        <section>
+          <h2>Let's start diving into code!</h2>
+        </section>
+
+        <section>
+          <h2>Without React, you might do something like...</h2>
+          <pre><code>
+  $(function(){
+    var appendTodo = function(todo) {
+      $('.todos').append('<li>' + todo + '</li>');
+    }
+
+    var addTodoOnSubmit = function() {
+      $('#add-todo').on('submit', function(event) {
+        event.preventDefault();
+        var $value = $(this).find('input').val();
+        appendTodo($value);
+      });
+    }
+
+    addTodoOnSubmit();
+  });
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Thinking the React Way</h2>
+          <p>First, let's break down our app into components</p>
+          <img src="img/todolist-layout.png" alt="to do list layout">
+          <p style="font-size:25px;">
+            <span style="color:red;">TodoApp</span>,
+            <span style="color:orange;">TodoInput</span>,
+            <span style="color:blueviolet;">TodoList</span>,
+            <span style="color:yellowgreen;">TodoListItem</span>
+          </p>
+        </section>
+
+        <section>
+          <h2>Setting Up</h2>
+          <p>We will only be using React and JSX. None of the crazy stuff for now</p>
+          <div class="highlight"><pre><code class="language-html" data-lang="html">
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;meta charset=&quot;UTF-8&quot; /&gt;
+      &lt;title&gt;Hello React!&lt;/title&gt;
+      <!-- React CDN -->
+      &lt;script src=&quot;https://unpkg.com/react@15.3.1/dist/react.js&quot;&gt;&lt;/script&gt;
+      &lt;script src=&quot;https://unpkg.com/react-dom@15.3.1/dist/react-dom.js&quot;&gt;&lt;/script&gt;
+      <!-- Babel CDN (needed for JSX syntax) -->
+      &lt;script src=&quot;https://unpkg.com/babel-core@5.8.38/browser.min.js&quot;&gt;&lt;/script&gt;browser.min.js&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;div id=&quot;container&quot;&gt;&lt;/div&gt;
+      &lt;script type=&quot;text/babel&quot;&gt;
+        // your code here
+      &lt;/script&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+
+</code></pre></div>
+        </section>
+
+        <section>
+          <h2>What is JSX?</h2>
+          <p>XML/HTML-like syntax in Javascript</p>
+          <div class="highlight"><pre><code>
+  // without JSX
+  var paragraph = React.createElement({
+    'p',
+    { className: 'hello' }
+  });
+
+  // JSX
+  var paragraphJSX = (<p class="hello">Hello world!</p>);
+
+</code></pre></div>
+        </section>
+
+        <section>
+          <h2>Craziness comes in</h2>
+          <a href="https://www.reactenlightenment.com/react-jsx/5.1.html" target="_blank">nav example without JSX</a>
+        </section>
+
+        <section>
+          <h2>Basic React Example</h2>
+          <p>How do we make components?</p>
+          <pre><code>
+  // HelloWorld component
+  var HelloWorld = React.createClass({
+    render: function() {
+      return &lt;h1&gt;Hello World!&lt;/h1&gt;;
+    }
+  });
+
+  // To render to page
+  ReactDOM.render(
+    &lt;HelloWorld /&gt;,
+    document.getElementById('container')
+  );
+          </code></pre>
+      </section>
+
+      <section>
+        <p>Wait a minute...I can do that in a few lines in jQuery!</p>
+      </section>
+
+      <section>
+        <h2>A preview on extensions</h2>
+        <ul>
+          <li>ES6</li>
+          <li>Redux</li>
+          <li>Webpack</li>
+          <li>Linters</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>My approach to learning</h2>
+        <ul>
+          <li>Try React on its own</li>
+          <li>Use a video tutorial but don't see it as your only resource</li>
+          <li>Use it on your own project. You'll learn more that way</li>
+          <li>Check the docs</li>
+          <li>Google sensei</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Resources</h2>
+        <ul>
+          <li>
+            <a href="https://github.com/kksy/plain-react-todo" target="_blank">My React to-do list code</a>
+          </li>
+          <li>
+            <a href="http://reactfordesigners.com/labs/reactjs-introduction-for-people-who-know-just-enough-jquery-to-get-by/" target="_blank">React for those who know just enough jQuery</a>
+          </li>
+          <li>Videos:
+            <a href="https://egghead.io/technologies/react" target="_blank">Egghead</a> (starts with react and transitions to Redux),
+            <a href="https://www.udemy.com/react-redux/learn/v4/overview" target="_blank">Udemy</a> (ES6 + Redux)</li>
+          <li>React Docs!</li>
+        </ul>
+      </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
+</html>
