@@ -13,5 +13,5 @@ A React + JSX demo without extra things
 + http://kksy.github.io/plain-react-todo/slides
 
 ###### Link to demo
-+ http://kksy.github.io/plain-react-todo/slides
++ http://kksy.github.io/plain-react-todo
 + http://codepen.io/kksy/full/rrrjoK 
